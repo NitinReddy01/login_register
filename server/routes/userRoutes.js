@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const router = express.Router();
 
 mongoose.set('strictQuery', false)
-mongoose.connect("mongodb+srv://nitingogula:nitin1023@cluster0.vtyfuhx.mongodb.net/Users?retryWrites=true&w=majority", {
+mongoose.connect("", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }, (err) => {
