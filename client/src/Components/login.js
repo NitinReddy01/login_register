@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom"
 
 export default function Login(props) {
     const [uname, setuname] = useState("");
     const [pword, setPword] = useState("");
     const [error, setError] = useState(false);
+    const navigate = useNavigate();
     const login = (event) => {
         event.preventDefault();
         if (uname === '' || pword === '') {
@@ -11,10 +14,19 @@ export default function Login(props) {
         }
         else {
             console.log(uname, pword);
-            setError(false);
+            let user = {
+                name: uname,
+                password: pword
+            }
+            axios.post('http://localhost:4000/userLogin', user).then(res => {
+                alert(res.data.message)
+                props.setLoginUser(res.data.user);
+                setError(false);
+                setPword("");
+                setuname("");
+                navigate("/");
+            });
         }
-        setPword("");
-        setuname("");
     }
     const errorMessage = () => {
         return (
@@ -30,7 +42,7 @@ export default function Login(props) {
     return (
         <>
             <form >
-                <div className="box">
+                <div className="loginBox">
                     <div className="login">
                         Sign In
                     </div>
@@ -44,8 +56,8 @@ export default function Login(props) {
                         <input className="pword" type="password" placeholder="Password" value={pword} required onChange={(e) => { setPword(e.target.value) }} />
                     </div>
                     <div className="or1">
-                        not a member?<a className="orsign" href="/" onClick={props.changeToggle}> signup now </a><br></br>
-                        <a className="orsign" href="/" onClick={props.getUser}> getUsers </a>
+                        not a member?<Link className="orsign" to="/register" > signup now </Link><br></br>
+                        <Link className="orsign" to="/allUsers" > getUsers </Link>
                     </div>
                     <div className="loginbtn">
                         <button className="but" onClick={login} >SIGN IN</button>

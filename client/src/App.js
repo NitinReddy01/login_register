@@ -1,42 +1,29 @@
-import Login from "./Components/login";
+import Login from "./Components/Login";
 import "./App.css";
-import Register from "./Components/register";
+import Register from "./Components/Register";
 import { useState } from "react";
-import axios from "axios";
-import UserInfo from "./Components/users";
-
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Homepage from "./Components/Homepage";
+import UserInfo from "./Components/Users";
+import Update from "./Components/Udpate";
 
 function App() {
-  const [toggle,setToggle]=useState("login");
-  const [users, setUsers] = useState([]);
-  const [userDisplay, setUserDisplay] = useState(false);
-  const changeToggle=(e)=>{
-    e.preventDefault();
-    setToggle(toggle ==="login"?"register":"login");
-  }
-  const getUser = (event) => {
-    event.preventDefault();
-    axios.get('http://localhost:4000/getUsers').then((res) => {
-        setUsers(res.data);
-        setUserDisplay(true);
-    });
-}
-  if(toggle==="login"){
-    return (
-      <>
-      <Login changeToggle={changeToggle} getUser={getUser}/>
-      <UserInfo users={users} userDisplay={userDisplay}/>
-      </>
-    );
-  }
-  else{
-    return (
-      <>
-      <Register changeToggle={changeToggle} getUser={getUser}/>
-      <UserInfo users={users} userDisplay={userDisplay}/>
-      </>
-    );
-  }
+  const [loginUser, setLoginUser] = useState({});
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={(loginUser && loginUser._id) ? <Homepage setLoginUser={setLoginUser} /> : <><Login setLoginUser={setLoginUser} /></>} />
+        <Route path="/login" element={<><Login setLoginUser={setLoginUser} /></>} />
+        <Route path="/register" element={<><Register /></>} />
+        <Route path="/allUsers" element={<><UserInfo /></>} />
+        <Route path="/update/:id" element={<><Update /></>} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
