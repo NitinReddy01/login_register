@@ -20,13 +20,8 @@ const userSchema = new mongoose.Schema({
     branch: String,
     password: String
 })
-const userSchema1 = new mongoose.Schema({
-    id:String,
-    name: String
-})
 
 let User = mongoose.model('detail', userSchema);
-let Emp = mongoose.model('emp', userSchema1);
 
 router.post("/userRegister", (req, res) => {
     console.log(req.body.name);
@@ -100,7 +95,7 @@ router.post("/updateUser/:id",(req,res)=>{
     console.log(req.body);
     User.updateOne({_id:req.params.id},{ name: req.body.name, branch: req.body.branch, password: req.body.password },(err,usr)=>{
         if(err){
-            console.log(err);
+            console.log(err);r
         }
         else{
             res.send({message:`user ${req.body.name} updated`});
@@ -108,17 +103,5 @@ router.post("/updateUser/:id",(req,res)=>{
     })
 })
 
-router.post("/addEmp",(req,res)=>{
-    let newuser = new Emp({ id:req.body.id,name: req.body.name });
-            newuser.save((err) => {
-                if (err) {
-                    console.log("error occured");
-                }
-                else {
-                    console.log("user added");
-                    res.send({ message: `${req.body.name} registered successfully` });
-                }
-            });
-})
 
 module.exports = router;

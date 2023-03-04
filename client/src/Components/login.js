@@ -28,6 +28,7 @@ export default function Login(props) {
             });
         }
     }
+    // to display msg if any of the fields are empty
     const errorMessage = () => {
         return (
             <div

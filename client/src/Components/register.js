@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { Link,useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
 
 export default function Register(props) {
     const [uname, setUname] = useState("");
@@ -60,7 +59,6 @@ export default function Register(props) {
     };
     return (
         <>  
-            <Navbar/>
             <form action="/">
                 <div className="box">
                     <div className="login">

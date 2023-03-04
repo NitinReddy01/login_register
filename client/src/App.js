@@ -16,6 +16,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* if the user is logged in then hompage will be displayed else login page */}
         <Route path="/" element={(loginUser && loginUser._id) ? <Homepage setLoginUser={setLoginUser} /> : <><Login setLoginUser={setLoginUser} /></>} />
         <Route path="/login" element={<><Login setLoginUser={setLoginUser} /></>} />
         <Route path="/register" element={<><Register /></>} />

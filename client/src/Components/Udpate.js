@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { useNavigate, useParams } from "react-router-dom";
+import Navbar from "./Navbar";
 
 export default function Update() {
     const [uname, setUname] = useState("");
@@ -11,9 +12,11 @@ export default function Update() {
     const navigate = useNavigate();
     const { id } = useParams();
 
+    // to get the data of the user we are updating as soon the component is rendered
     useEffect(() => {
         getUser(id);
     }, [id])
+    //  to get user details
     const getUser = (id) => {
         axios.get(`http://localhost:4000/getUser/${id}`).then(res => {
             setUname(res.data.name);
@@ -27,6 +30,7 @@ export default function Update() {
     const pwrodChange = (event) => {
         setPword(event.target.value);
     }
+    //updating the user details
     const update = (event) => {
         event.preventDefault();
         if (uname === '' || pword === '' || branch === "Choose Branch") {
@@ -49,6 +53,7 @@ export default function Update() {
             });
         }
     }
+    // to display error msg if any fields are empty
     const errorMessage = () => {
         return (
             <div
@@ -62,6 +67,7 @@ export default function Update() {
     };
     return (
         <>
+            <Navbar/>
             <form action="/">
                 <div className="box">
                     <div className="login">
